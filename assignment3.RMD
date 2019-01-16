@@ -1,0 +1,48 @@
+---
+title: "Assignment Week 3"
+author: "Benjamin Mohn"
+date: "16.01.2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Description
+
+The graphic shown on the next slide is created using plotly. 
+
+The data presented is from the build in data set **Orange**
+On the x-axis you will see the age of the tree in days since 31.12.1968.  
+The y-axis will show the circumference of the tree on breast height.  
+Lastly each color will represent a different tree. 
+
+## Graphic
+```{r helper_data}
+df <- Orange
+
+text_creator <- function(x){
+                paste('Tree:', x[1], '<br> Circumference:', x[3])
+                }
+df$text <- apply(df, 1, FUN=text_creator)
+```
+
+```{r helper_graph}
+suppressMessages(library(plotly))
+f <- list(size=14, 
+           color="orange")
+
+x <- list(title='Days since 31st of Dec 1968',
+          titlefont= f)
+y <- list(title='Circumference in mm in breast height',
+          titlefont= f)
+```
+
+```{r plotting}
+plot_ly(data=df, x=df$age, y=df$circumference, color = df$Tree, mode="line", type="scatter", text=df$text)%>%
+layout(title="Circumference of Orange Trees", xaxis=x, yaxis=y) 
+```
+
+## Thanks for taking a look 
+
